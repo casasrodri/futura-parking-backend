@@ -17,7 +17,8 @@ const PORT = 8080;
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/', express.static(process.cwd() + '/public'));
+app.use('/', express.static(process.cwd() + '/public/dist'));
+app.use('/public', express.static(process.cwd() + '/public'));
 
 // HTTP Server
 const httpServer = app.listen(PORT, () => {
@@ -28,5 +29,5 @@ const httpServer = app.listen(PORT, () => {
 setRouters(app);
 
 app.get('/', async (req, res) => {
-    res.sendFile('./public/index.html', { root: './' });
+    res.sendFile('./public/dist/index.html', { root: '.' });
 });
