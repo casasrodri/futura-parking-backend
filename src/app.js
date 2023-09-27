@@ -27,7 +27,3 @@ const httpServer = app.listen(PORT, () => {
 
 // Routers
 setRouters(app);
-
-app.get('/', async (req, res) => {
-    res.sendFile('./public/dist/index.html', { root: '.' });
-});
