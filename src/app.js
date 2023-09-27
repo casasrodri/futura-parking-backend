@@ -2,25 +2,26 @@ import express from 'express';
 import mongoose from 'mongoose';
 import setRouters from './routes/router.js';
 
+// Conexión con Mongo Atlas
 const mongoConnect = async () => {
-    const database = 'futura';
     await mongoose.connect(
-        `mongodb+srv://rodri:rodri@cluster0.fhf3wmo.mongodb.net/${database}?retryWrites=true&w=majority`
+        `mongodb+srv://rodri:rodri@cluster0.fhf3wmo.mongodb.net/futura?retryWrites=true&w=majority`
     );
-    console.log('☁ MongoDB connected');
+    console.log('🧭 MongoDB conectado.');
 };
-
 mongoConnect();
 
 const app = express();
 const PORT = 8080;
 
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// HTTP Server
+const httpServer = app.listen(PORT, () => {
+    console.log(`🚀 HTTP server disponible en http://localhost:${PORT}`);
+});
+
 // Routers
 setRouters(app);
-
-const httpServer = app.listen(PORT, () => {
-    console.log(`🚀 HTTP server is now running on http://localhost:${PORT}`);
-});
