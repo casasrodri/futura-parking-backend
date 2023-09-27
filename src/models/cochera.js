@@ -11,7 +11,9 @@ const schema = new mongoose.Schema({
     propietario: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'usuarios',
+        required: true,
     },
+    observaciones: { type: String },
 });
 
 // schema.plugin(mongoosePaginate);
