@@ -6,19 +6,28 @@ const um = new UsuarioManager();
 
 router.get('/', async (req, res) => {
     const usuarios = await um.obtenerTodos();
-    res.send(usuarios);
+    res.json(usuarios);
 });
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const usuario = await um.obtenerPorId(id);
-    res.send(usuario);
+    res.json(usuario);
 });
 
 router.post('/', async (req, res) => {
     const datos = req.body;
-    const creado = await um.crear(datos);
-    res.send(creado);
+    try {
+        const creado = await um.crear(datos);
+
+        req.session.usuario = creado._id;
+        req.session.isLogged = true;
+        console.log(req.session);
+
+        res.json(creado);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 router.put('/:id', async (req, res) => {
@@ -26,13 +35,13 @@ router.put('/:id', async (req, res) => {
     const datos = req.body;
 
     const actualizado = await um.actualizar(id, datos);
-    res.send(actualizado);
+    res.json(actualizado);
 });
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const eliminado = await um.eliminar(id);
-    res.send(eliminado);
+    res.json(eliminado);
 });
 
 export default router;

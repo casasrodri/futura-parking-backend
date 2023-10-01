@@ -22,7 +22,7 @@ export default class CocheraManager {
         return cochera;
     }
 
-    async actualizar(id, usuario) {
+    async actualizar(id, cochera) {
         const actualizado = await Cochera.findByIdAndUpdate(id, cochera, {
             new: true,
         });

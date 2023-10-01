@@ -19,8 +19,8 @@ const schema = new mongoose.Schema(
         observaciones: { type: String },
         estado: {
             type: String,
-            required: true,
             enum: ['disponible', 'finalizada'], // FIXME: adaptar estados.
+            default: 'disponible',
         },
 
         // Sólo para ofertas
