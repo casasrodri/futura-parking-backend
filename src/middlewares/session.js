@@ -8,12 +8,13 @@ export default session({
     store: MongoStore.create({
         mongoUrl: MONGO_DB_URI,
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-        ttl: 60 * 5,
+        ttl: 1 * 60 * 60, // 1 hora de sesión (en segundos)
     }),
     secret: 'sasaCogirdoRnairdA',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        maxAge: 3600000, // Duración de la cookie de sesión en milisegundos (1 hora en este ejemplo)
-    },
+    // cookie: {
+    //     maxAge: 3600000, // Duración de la cookie de sesión en milisegundos (1 hora en este ejemplo)
+    // },
+    // 3600000
 });

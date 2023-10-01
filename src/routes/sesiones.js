@@ -2,10 +2,11 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/logged', async (req, res) => {
-    // console.log(req.sessionID);
-    // console.log(req.session);
-    res.json(req.session.isLogged);
+router.get('/', async (req, res) => {
+    res.json({
+        sessionId: req.sessionID,
+        isLogged: req.session.isLogged || false,
+    });
 });
 
 router.post('/login', async (req, res) => {

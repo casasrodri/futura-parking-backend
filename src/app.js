@@ -24,8 +24,9 @@ app.use('/', express.static(process.cwd() + '/public/dist'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(consoleActivity({ ip: false, color: true, body: true }));
 app.use(sessionMiddleware);
+
 const corsOptions = {
-    origin: 'http://localhost:5173', // Cambia esto a la URL de tu aplicación Vue.js
+    origin: true, // Cambia esto a la URL de tu aplicación Vue.js
     credentials: true, // Habilita el intercambio de cookies
 };
 app.use(cors(corsOptions));
