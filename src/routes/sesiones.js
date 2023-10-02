@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
         isLogged: req.session.isLogged || false,
         session: req.session,
         cookies: req.cookies || {},
+        usuario: req.session.idUsuario || null,
     });
     // res.cookie('prueba', 'Rodri');
 });
