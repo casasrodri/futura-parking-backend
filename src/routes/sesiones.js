@@ -7,7 +7,9 @@ router.get('/', async (req, res) => {
         sessionId: req.session.id,
         isLogged: req.session.isLogged || false,
         session: req.session,
+        cookies: req.cookies || {},
     });
+    // res.cookie('prueba', 'Rodri');
 });
 
 router.post('/login', async (req, res) => {

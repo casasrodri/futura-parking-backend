@@ -4,6 +4,7 @@ import setRouters from './routes/index.js';
 import consoleActivity from './middlewares/console.js';
 import cors from 'cors';
 import sessionMiddleware from './middlewares/session.js';
+import cookieParser from 'cookie-parser';
 
 // Conexión con Mongo Atlas
 const mongoConnect = async () => {
@@ -20,10 +21,11 @@ const PORT = 8080;
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(sessionMiddleware);
 app.use('/', express.static(process.cwd() + '/public/dist'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(consoleActivity({ ip: false, color: true, body: true }));
-app.use(sessionMiddleware);
+app.use(cookieParser());
 
 const corsOptions = {
     origin: true, // Cambia esto a la URL de tu aplicación Vue.js
@@ -31,6 +33,15 @@ const corsOptions = {
 };
 // app.set('trust proxy', 1);
 app.use(cors(corsOptions));
+
+// Esto funciona OK
+app.get('/ses', (req, res) => {
+    req.session.nombre = 'Rodri';
+    req.session.contador = req.session.contador ? req.session.contador + 1 : 1;
+    res.send(
+        `Hola ${req.session.nombre}, has visitado esta página ${req.session.contador} veces!`
+    );
+});
 
 // HTTP Server
 const httpServer = app.listen(PORT, () => {

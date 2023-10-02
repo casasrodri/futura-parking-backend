@@ -10,7 +10,6 @@ export default (app) => {
     app.use('/api/vehiculos', vehiculosRotuer);
     app.use('/api/publicaciones', publicacionesRotuer);
     app.use('/api/sesiones', sesionesRotuer);
-
     // fallback o catch-all
     app.get('*', (req, res) => {
         res.sendFile('./public/dist/index.html', { root: '.' });
