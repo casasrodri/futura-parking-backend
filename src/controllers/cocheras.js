@@ -22,6 +22,11 @@ export default class CocheraManager {
         return cochera;
     }
 
+    async obtenerPorPropietario(id) {
+        const cocheras = await Cochera.find({ propietario: id });
+        return cocheras;
+    }
+
     async actualizar(id, cochera) {
         const actualizado = await Cochera.findByIdAndUpdate(id, cochera, {
             new: true,

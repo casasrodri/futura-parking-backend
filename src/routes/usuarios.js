@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     try {
         const creado = await um.crear(datos);
 
-        req.session.usuario = creado._id;
+        req.session.idUsuario = creado._id.toString();
         req.session.isLogged = true;
         console.log(req.session);
 

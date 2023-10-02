@@ -26,22 +26,12 @@ app.use('/', express.static(process.cwd() + '/public/dist'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(consoleActivity({ ip: false, color: true, body: true }));
 app.use(cookieParser());
-
-const corsOptions = {
-    origin: true, // Cambia esto a la URL de tu aplicación Vue.js
-    credentials: true, // Habilita el intercambio de cookies
-};
-// app.set('trust proxy', 1);
-app.use(cors(corsOptions));
-
-// Esto funciona OK
-app.get('/ses', (req, res) => {
-    req.session.nombre = 'Rodri';
-    req.session.contador = req.session.contador ? req.session.contador + 1 : 1;
-    res.send(
-        `Hola ${req.session.nombre}, has visitado esta página ${req.session.contador} veces!`
-    );
-});
+app.use(
+    cors({
+        origin: true, // Cambia esto a la URL de tu aplicación Vue.js
+        credentials: true, // Habilita el intercambio de cookies
+    })
+);
 
 // HTTP Server
 const httpServer = app.listen(PORT, () => {
