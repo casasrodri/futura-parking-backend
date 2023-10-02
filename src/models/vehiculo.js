@@ -13,6 +13,7 @@ const schema = new mongoose.Schema(
             ref: 'usuarios',
             required: true,
         },
+        alias: { type: String, required: true },
     },
     { timestamps: true }
 );

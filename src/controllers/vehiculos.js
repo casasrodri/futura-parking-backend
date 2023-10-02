@@ -2,9 +2,18 @@ import Vehiculo from '../models/vehiculo.js';
 
 export default class VehiculoManager {
     async crear(vehiculo) {
-        const { patente, marca, modelo, color, tipo, propietario } = vehiculo;
+        const { patente, marca, modelo, color, tipo, propietario, alias } =
+            vehiculo;
 
-        if (!patente || !marca || !modelo || !color || !tipo || !propietario) {
+        if (
+            !patente ||
+            !marca ||
+            !modelo ||
+            !color ||
+            !tipo ||
+            !propietario ||
+            !alias
+        ) {
             throw new Error('Faltan datos');
         }
 
