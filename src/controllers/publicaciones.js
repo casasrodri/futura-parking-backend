@@ -40,7 +40,7 @@ export default class PublicacionManager {
 
     async obtenerPorId(id) {
         const publicacion = await Publicacion.findById(id).populate(
-            'propietario'
+            'creador cochera vehiculo'
         );
         return publicacion;
     }
