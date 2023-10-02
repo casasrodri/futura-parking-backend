@@ -22,6 +22,11 @@ export default class VehiculoManager {
         return vehiculo;
     }
 
+    async obtenerPorPropietario(id) {
+        const vehiculos = await Vehiculo.find({ propietario: id });
+        return vehiculos;
+    }
+
     async actualizar(id, vehiculo) {
         const actualizado = await Vehiculo.findByIdAndUpdate(id, vehiculo, {
             new: true,

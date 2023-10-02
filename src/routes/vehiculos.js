@@ -9,10 +9,22 @@ router.get('/', async (req, res) => {
     res.send(vehiculos);
 });
 
+router.get('/delPropietario', async (req, res) => {
+    const usuario = req.session.idUsuario;
+    const vehiculos = await vm.obtenerPorPropietario(usuario);
+    res.json(vehiculos);
+});
+
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const vehiculo = await vm.obtenerPorId(id);
     res.send(vehiculo);
+});
+
+router.get('/propietario/:id', async (req, res) => {
+    const { id } = req.params;
+    const vehiculos = await vm.obtenerPorPropietario(id);
+    res.send(vehiculos);
 });
 
 router.post('/', async (req, res) => {
