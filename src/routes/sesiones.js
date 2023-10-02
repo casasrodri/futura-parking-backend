@@ -4,8 +4,9 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     res.json({
-        sessionId: req.sessionID,
+        sessionId: req.session.id,
         isLogged: req.session.isLogged || false,
+        session: req.session,
     });
 });
 

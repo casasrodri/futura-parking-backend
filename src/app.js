@@ -29,6 +29,7 @@ const corsOptions = {
     origin: true, // Cambia esto a la URL de tu aplicación Vue.js
     credentials: true, // Habilita el intercambio de cookies
 };
+// app.set('trust proxy', 1);
 app.use(cors(corsOptions));
 
 // HTTP Server

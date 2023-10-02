@@ -12,9 +12,13 @@ export default session({
     }),
     secret: 'sasaCogirdoRnairdA',
     resave: false,
-    saveUninitialized: false,
-    // cookie: {
-    //     maxAge: 3600000, // Duración de la cookie de sesión en milisegundos (1 hora en este ejemplo)
-    // },
+    saveUninitialized: true,
+    sameSite: 'none',
+    // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // cookie: {},
+    cookie: {
+        secure: false,
+        // maxAge: 3600000, // Duración de la cookie de sesión en milisegundos (1 hora en este ejemplo)
+    },
     // 3600000
 });
