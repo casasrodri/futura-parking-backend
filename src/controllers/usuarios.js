@@ -22,6 +22,11 @@ export default class UsuarioManager {
         return usuario;
     }
 
+    async obtenerPorEmail(email) {
+        const usuario = await Usuario.findOne({ email });
+        return usuario;
+    }
+
     async actualizar(id, usuario) {
         const actualizado = await Usuario.findByIdAndUpdate(id, usuario, {
             new: true,
