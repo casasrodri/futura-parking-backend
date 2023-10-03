@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
         session: req.session,
         cookies: req.cookies || {},
         usuario: req.session.idUsuario || null,
+        nombre: req.session.nombre || null,
     });
     // res.cookie('prueba', 'Rodri');
 });
@@ -18,11 +19,30 @@ router.post('/login', async (req, res) => {
 
     if (email === 'admin' && password === 'admin') {
         req.session.idUsuario = '6513a457bed50d37c2a7910a';
+        req.session.nombre = 'admin';
         req.session.isLogged = true;
         res.json({ ok: true });
     } else {
         res.json({ ok: false });
     }
+});
+
+router.post('/logout', async (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send({
+                status: 'error',
+                message: 'Logout error',
+                data: { err },
+            });
+        }
+    });
+
+    res.status(200).send({
+        status: 'ok',
+        message: 'Logout successfull',
+        data: {},
+    });
 });
 
 export default router;
