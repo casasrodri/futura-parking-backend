@@ -38,7 +38,7 @@ router.post('/logout', async (req, res) => {
         }
     });
 
-    res.status(200).send({
+    res.status(200).json({
         status: 'ok',
         message: 'Logout successfull',
         data: {},
