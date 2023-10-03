@@ -40,3 +40,30 @@ const httpServer = app.listen(PORT, () => {
 
 // Routers
 setRouters(app);
+
+import { Server } from 'socket.io';
+const socketServer = new Server(httpServer, {
+    cors: {
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    },
+});
+
+socketServer.on('connection', async (socket) => {
+    console.log('[Chat] New connection', socket.id);
+
+    socket.on('newMessage', async (user, name, text) => {
+        console.log('[io] newMessage:', user, name, text);
+        socketServer.emit('avisoDelServer', 'Se recibió el mensaje: ' + text);
+    });
+
+    socket.on('escribiendo', async (publicacion, user) => {
+        console.log('[io] escribiendo...:', publicacion, user);
+        socketServer.emit('mostrarEscribiendo', publicacion, user, 1);
+    });
+
+    socket.on('noEscribiendo', async (publicacion, user) => {
+        console.log('[io] noEscribiendo...:', publicacion, user);
+        socketServer.emit('mostrarEscribiendo', publicacion, user, -1);
+    });
+});
