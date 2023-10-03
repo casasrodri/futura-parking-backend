@@ -1,8 +1,7 @@
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
 
-const MONGO_DB_URI =
-    'mongodb+srv://rodri:rodri@cluster0.fhf3wmo.mongodb.net/futura?retryWrites=true&w=majority';
+import { MONGO_DB_URI } from '../database/mongo.js';
 
 export default session({
     store: MongoStore.create({
