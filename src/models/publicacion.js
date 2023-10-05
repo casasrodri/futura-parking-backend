@@ -15,7 +15,6 @@ const schema = new mongoose.Schema(
         },
         ini: { type: Date, required: true },
         fin: { type: Date, required: true },
-        vencimiento: { type: Date, required: true },
         observaciones: { type: String },
         estado: {
             type: String,
@@ -28,7 +27,6 @@ const schema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'cocheras',
         },
-        precio: { type: Number },
 
         // Sólo para demandas
         vehiculo: {
