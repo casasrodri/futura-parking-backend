@@ -6,7 +6,7 @@ const vm = new VehiculoManager();
 
 router.get('/', async (req, res) => {
     const vehiculos = await vm.obtenerTodos();
-    res.send(vehiculos);
+    res.json(vehiculos);
 });
 
 router.get('/delPropietario', async (req, res) => {
@@ -18,19 +18,19 @@ router.get('/delPropietario', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const vehiculo = await vm.obtenerPorId(id);
-    res.send(vehiculo);
+    res.json(vehiculo);
 });
 
 router.get('/propietario/:id', async (req, res) => {
     const { id } = req.params;
     const vehiculos = await vm.obtenerPorPropietario(id);
-    res.send(vehiculos);
+    res.json(vehiculos);
 });
 
 router.post('/', async (req, res) => {
     const datos = req.body;
     const creado = await vm.crear(datos);
-    res.send(creado);
+    res.json(creado);
 });
 
 router.put('/:id', async (req, res) => {
@@ -38,13 +38,13 @@ router.put('/:id', async (req, res) => {
     const datos = req.body;
 
     const actualizado = await vm.actualizar(id, datos);
-    res.send(actualizado);
+    res.json(actualizado);
 });
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const eliminado = await vm.eliminar(id);
-    res.send(eliminado);
+    res.json(eliminado);
 });
 
 export default router;

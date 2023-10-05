@@ -6,25 +6,25 @@ const pm = new PublicacionManager();
 
 router.get('/', async (req, res) => {
     const publicaciones = await pm.obtenerTodos();
-    res.send(publicaciones);
+    res.json(publicaciones);
 });
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const publicacion = await pm.obtenerPorId(id);
-    res.send(publicacion);
+    res.json(publicacion);
 });
 
 router.get('/disponibles/:tipo', async (req, res) => {
     const { tipo } = req.params;
     const publicaciones = await pm.obtenerDisponibles(tipo);
-    res.send(publicaciones);
+    res.json(publicaciones);
 });
 
 router.post('/', async (req, res) => {
     const datos = req.body;
     const creada = await pm.crear(datos);
-    res.send(creada);
+    res.json(creada);
 });
 
 router.put('/:id', async (req, res) => {
@@ -32,13 +32,13 @@ router.put('/:id', async (req, res) => {
     const datos = req.body;
 
     const actualizada = await pm.actualizar(id, datos);
-    res.send(actualizada);
+    res.json(actualizada);
 });
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const eliminada = await pm.eliminar(id);
-    res.send(eliminada);
+    res.json(eliminada);
 });
 
 export default router;

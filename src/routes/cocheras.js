@@ -6,7 +6,7 @@ const cm = new CocheraManager();
 
 router.get('/', async (req, res) => {
     const cocheras = await cm.obtenerTodos();
-    res.send(cocheras);
+    res.json(cocheras);
 });
 
 router.get('/delPropietario', async (req, res) => {
@@ -18,19 +18,19 @@ router.get('/delPropietario', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const cochera = await cm.obtenerPorId(id);
-    res.send(cochera);
+    res.json(cochera);
 });
 
 router.get('/propietario/:id', async (req, res) => {
     const { id } = req.params;
     const cocheras = await cm.obtenerPorPropietario(id);
-    res.send(cocheras);
+    res.json(cocheras);
 });
 
 router.post('/', async (req, res) => {
     const datos = req.body;
     const creada = await cm.crear(datos);
-    res.send(creada);
+    res.json(creada);
 });
 
 router.put('/:id', async (req, res) => {
@@ -39,13 +39,13 @@ router.put('/:id', async (req, res) => {
     const datos = req.body;
 
     const actualizada = await cm.actualizar(id, datos);
-    res.send(actualizada);
+    res.json(actualizada);
 });
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const eliminada = await cm.eliminar(id);
-    res.send(eliminada);
+    res.json(eliminada);
 });
 
 export default router;
