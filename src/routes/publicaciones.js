@@ -15,6 +15,12 @@ router.get('/:id', async (req, res) => {
     res.send(publicacion);
 });
 
+router.get('/disponibles/:tipo', async (req, res) => {
+    const { tipo } = req.params;
+    const publicaciones = await pm.obtenerDisponibles(tipo);
+    res.send(publicaciones);
+});
+
 router.post('/', async (req, res) => {
     const datos = req.body;
     const creada = await pm.crear(datos);
