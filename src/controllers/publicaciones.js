@@ -34,7 +34,23 @@ export default class PublicacionManager {
     }
 
     async obtenerTodos() {
-        const publicaciones = await Publicacion.find();
+        const publicaciones = await Publicacion.find()
+            .populate('creador cochera vehiculo')
+            .sort({
+                createdAt: -1,
+            });
+        return publicaciones;
+    }
+
+    async obtenerDisponibles(tipo) {
+        const publicaciones = await Publicacion.find({
+            estado: 'disponible',
+            tipo,
+        })
+            .populate('creador cochera vehiculo')
+            .sort({
+                createdAt: -1,
+            });
         return publicaciones;
     }
 
