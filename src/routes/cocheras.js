@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import CocheraManager from '../controllers/cocheras.js';
+import jwtAuth from '../middlewares/jwt.js';
 
 const router = Router();
+router.use(jwtAuth);
 const cm = new CocheraManager();
 
 router.get('/', async (req, res) => {
@@ -10,7 +12,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/delPropietario', async (req, res) => {
-    const usuario = req.session.idUsuario;
+    const usuario = req.usuario._id;
     const cocheras = await cm.obtenerPorPropietario(usuario);
     res.json(cocheras);
 });

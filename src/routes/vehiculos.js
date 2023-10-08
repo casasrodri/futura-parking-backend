@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import VehiculoManager from '../controllers/vehiculos.js';
+import jwtAuth from '../middlewares/jwt.js';
 
 const router = Router();
+router.use(jwtAuth);
 const vm = new VehiculoManager();
 
 router.get('/', async (req, res) => {
@@ -10,7 +12,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/delPropietario', async (req, res) => {
-    const usuario = req.session.idUsuario;
+    const usuario = req.usuario._id;
     const vehiculos = await vm.obtenerPorPropietario(usuario);
     res.json(vehiculos);
 });
