@@ -1,4 +1,4 @@
-import { COLORS, color } from '../helpers/colors.js';
+import { COLORS, color } from '../utils/colors.js';
 
 function coloredMethod(method) {
     switch (method) {

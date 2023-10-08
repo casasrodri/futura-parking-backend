@@ -30,7 +30,7 @@ const pm = new PublicacionManager();
 
 const pr = async () => {
     // Este tiene de ejemplo una publi con 100% coincidencia y otra de 94,09%
-    const publicaciones = await pm.obtenerSimilares('651dfc5ee5e19f9859bb0a83');
-    console.log(publicaciones);
+    // const publicaciones = await pm.obtenerSimilares('651dfc5ee5e19f9859bb0a83');
+    // console.log(publicaciones);
 };
 pr();
