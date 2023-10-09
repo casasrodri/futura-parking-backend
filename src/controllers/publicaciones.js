@@ -15,7 +15,7 @@ const determinarSimilitud = (base, comparada) => {
 
     return duracionCompartida / duracion1;
 };
-const print = console.log;
+
 export default class PublicacionManager {
     async crear(publicacion) {
         const { tipo, creador, ini, fin, cochera, precio, vehiculo } =
@@ -76,20 +76,9 @@ export default class PublicacionManager {
             return p;
         });
 
-        // publicacionObj.forEach((p) => {
-        //     print(p.tipo);
-        //     print(
-        //         p.creador._id,
-        //         publicacion.creador._id,
-        //         p.creador._id.toString() != publicacion.creador._id.toString()
-        //     );
-        //     print(p.similitud);
-        //     print('.........................................');
-        // });
-
         // Filtrado de similitud y que no sean del mismo usuario
         const publicacionesSimilares = publicacionObj.filter((p) => {
-            return p.similitud >= 0.5;
+            return p.similitud > 0;
         });
 
         // Ordenamiento por similitud (descendente)

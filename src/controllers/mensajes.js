@@ -3,6 +3,7 @@ import Mensaje from '../models/mensaje.js';
 export default class MensajeManager {
     async crear(msj) {
         const { conversacion, usuario, mensaje } = msj;
+        console.log(conversacion, usuario, mensaje);
 
         if (!conversacion || !usuario || !mensaje) {
             throw new Error('Faltan datos para crear el mensaje');
@@ -16,6 +17,11 @@ export default class MensajeManager {
         const mensaje = await Mensaje.findById(id);
         if (!mensaje) {
             throw new Error('No se encontró el mensaje');
+        }
+
+        const yaLeido = mensaje.lecturas.filter((l) => l.usuario === usuario);
+        if (yaLeido) {
+            return mensaje;
         }
 
         const lectura = {
@@ -39,21 +45,4 @@ export default class MensajeManager {
         const mensaje = await Mensaje.findById(id).populate('propietario');
         return mensaje;
     }
-
-    // async obtenerPorPropietario(id) {
-    //     const mensajes = await Mensaje.find({ propietario: id });
-    //     return mensajes;
-    // }
-
-    // async actualizar(id, mensaje) {
-    //     const actualizado = await Mensaje.findByIdAndUpdate(id, mensaje, {
-    //         new: true,
-    //     });
-    //     return actualizado;
-    // }
-
-    // async eliminar(id) {
-    //     const eliminado = await Mensaje.findByIdAndDelete(id);
-    //     return eliminado;
-    // }
 }

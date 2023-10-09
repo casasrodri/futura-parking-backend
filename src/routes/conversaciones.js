@@ -39,4 +39,13 @@ router.get('/:cid/mensajesNoLeidos/usuario/:uid', async (req, res) => {
     res.json(mensajesNoLeidos);
 });
 
+router.get('/delUsuario/:id', async (req, res) => {
+    const id = req.params.id;
+    const conversaciones = await Conversacion.find({
+        $or: [{ oferente: id }, { demandante: id }],
+    }).populate('publicacion oferente demandante');
+    // TODO filtrar las conversaciones cuyas publicaciones estén finalizadas
+    res.json(conversaciones);
+});
+
 export default router;
