@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const schema = new mongoose.Schema(
     {
-        publicacion: {
+        conversacion: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'publicaciones',
+            ref: 'conversaciones',
             required: true,
         },
         usuario: {
@@ -13,6 +13,16 @@ const schema = new mongoose.Schema(
             required: true,
         },
         mensaje: { type: String, required: true },
+        lecturas: [
+            {
+                usuario: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'usuarios',
+                    required: true,
+                },
+                fecha: { type: Date, required: true },
+            },
+        ],
     },
     { timestamps: true }
 );

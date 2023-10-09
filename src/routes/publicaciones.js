@@ -21,6 +21,12 @@ router.get('/disponibles/:tipo', async (req, res) => {
     res.json(publicaciones);
 });
 
+router.get('/recomendaciones/:id', async (req, res) => {
+    const { id } = req.params;
+    const publicaciones = await pm.obtenerRecomendaciones(id);
+    res.json(publicaciones);
+});
+
 router.post('/', async (req, res) => {
     const datos = req.body;
     const creada = await pm.crear(datos);

@@ -6,12 +6,8 @@ const determinarSimilitud = (base, comparada) => {
 
     // Datos en segundos
     const duracion1 = (base.fin - base.ini) / 1000;
-    console.log(base.fin, base.ini, duracion1);
     const duracion2 = (comparada.fin - comparada.ini) / 1000;
-    console.log(comparada.fin, comparada.ini, duracion2);
     const duracionCompartida = (finCompartido - iniCompartido) / 1000;
-    console.log(duracionCompartida);
-    console.log('------------');
 
     if (duracionCompartida <= 0) {
         return 0;
@@ -19,21 +15,13 @@ const determinarSimilitud = (base, comparada) => {
 
     return duracionCompartida / duracion1;
 };
-
+const print = console.log;
 export default class PublicacionManager {
     async crear(publicacion) {
-        const {
-            tipo,
-            creador,
-            ini,
-            fin,
-            vencimiento,
-            cochera,
-            precio,
-            vehiculo,
-        } = publicacion;
+        const { tipo, creador, ini, fin, cochera, precio, vehiculo } =
+            publicacion;
 
-        if (!tipo || !creador || !ini || !fin || !vencimiento) {
+        if (!tipo || !creador || !ini || !fin) {
             throw new Error('Faltan datos');
         }
 
@@ -44,7 +32,7 @@ export default class PublicacionManager {
         }
 
         if (tipo === 'oferta') {
-            if (!cochera || !precio) {
+            if (!cochera) {
                 throw new Error('Faltan datos de la oferta.');
             }
         }
@@ -74,9 +62,7 @@ export default class PublicacionManager {
         return publicaciones;
     }
 
-    async obtenerSimilares(id) {
-        // Endpoint: /api/publicaciones/similares/:id
-
+    async obtenerRecomendaciones(id) {
         const publicacion = await this.obtenerPorId(id);
         const tipo = publicacion.tipo === 'oferta' ? 'demanda' : 'oferta';
 
@@ -90,12 +76,20 @@ export default class PublicacionManager {
             return p;
         });
 
+        // publicacionObj.forEach((p) => {
+        //     print(p.tipo);
+        //     print(
+        //         p.creador._id,
+        //         publicacion.creador._id,
+        //         p.creador._id.toString() != publicacion.creador._id.toString()
+        //     );
+        //     print(p.similitud);
+        //     print('.........................................');
+        // });
+
         // Filtrado de similitud y que no sean del mismo usuario
         const publicacionesSimilares = publicacionObj.filter((p) => {
-            return (
-                p.creador._id.toString() !=
-                    publicacion.creador._id.toString() && p.similitud >= 0.5
-            );
+            return p.similitud >= 0.5;
         });
 
         // Ordenamiento por similitud (descendente)

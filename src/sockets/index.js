@@ -1,5 +1,7 @@
 import { Server } from 'socket.io';
+import MensajeManager from '../controllers/mensajes.js';
 
+const mm = new MensajeManager();
 const configIO = {
     cors: {
         origin: '*',
@@ -13,23 +15,34 @@ export default (httpServer) => {
     io.on('connection', async (socket) => {
         console.log('[Chat] New connection', socket.id);
 
-        socket.on('unirseChat', (publicacion) => {
-            socket.join(publicacion);
-            // console.log(socket.id + ' se ha unido al chat ' + publicacion);
-            // TODO Mandar todos los mensajes al unirse...
+        socket.on('unirseChat', async (conversacion) => {
+            socket.join(conversacion);
+
+            const todos = await mm.obtenerTodosPorConversacion(conversacion);
+            socket.emit('todosMensajes', todos);
         });
 
-        // Enviar un mensaje al chat de la publicación
-        socket.on('crearMensaje', (publicacion, usuario, mensaje) => {
-            io.to(publicacion).emit('nuevoMensaje', usuario, mensaje);
+        socket.on('crearMensaje', async (conversacion, usuario, mensaje) => {
+            const nuevo = await mm.crear({
+                conversacion,
+                usuario,
+                mensaje,
+            });
+
+            io.to(conversacion).emit('nuevoMensaje', nuevo);
         });
 
-        socket.on('escribiendo', async (publicacion, user) => {
-            io.to(publicacion).emit('mostrarEscribiendo', user, 1);
+        socket.on('marcarLeido', async (id, usuario) => {
+            const mensaje = await mm.marcarLeido(id, usuario);
+            io.to(mensaje.conversacion.toString()).emit('leido', id, usuario);
         });
 
-        socket.on('noEscribiendo', async (publicacion, user) => {
-            io.to(publicacion).emit('mostrarEscribiendo', user, -1);
+        socket.on('escribiendo', async (conversacion, user) => {
+            io.to(conversacion).emit('mostrarEscribiendo', user, 1);
+        });
+
+        socket.on('noEscribiendo', async (conversacion, user) => {
+            io.to(conversacion).emit('mostrarEscribiendo', user, -1);
         });
     });
 };
