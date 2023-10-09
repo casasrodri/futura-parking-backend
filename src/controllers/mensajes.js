@@ -1,13 +1,15 @@
 import Mensaje from '../models/mensaje.js';
+import { validarFaltantes } from '../utils/validaciones.js';
 
 export default class MensajeManager {
     async crear(msj) {
         const { conversacion, usuario, mensaje } = msj;
-        console.log(conversacion, usuario, mensaje);
 
-        if (!conversacion || !usuario || !mensaje) {
-            throw new Error('Faltan datos para crear el mensaje');
-        }
+        validarFaltantes('Faltan datos para crear el mensaje.', {
+            conversacion,
+            usuario,
+            mensaje,
+        });
 
         const creado = (await Mensaje.create(msj)).populate('usuario');
         return creado;

@@ -1,21 +1,20 @@
 import Vehiculo from '../models/vehiculo.js';
+import { validarFaltantes } from '../utils/validaciones.js';
 
 export default class VehiculoManager {
     async crear(vehiculo) {
         const { patente, marca, modelo, color, tipo, propietario, alias } =
             vehiculo;
 
-        if (
-            !patente ||
-            !marca ||
-            !modelo ||
-            !color ||
-            !tipo ||
-            !propietario ||
-            !alias
-        ) {
-            throw new Error('Faltan datos');
-        }
+        validarFaltantes('Faltan datos para crear el vehículo.', {
+            patente,
+            marca,
+            modelo,
+            color,
+            tipo,
+            propietario,
+            alias,
+        });
 
         const creado = await Vehiculo.create(vehiculo);
         return creado;

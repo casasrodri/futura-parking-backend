@@ -1,12 +1,15 @@
 import Cochera from '../models/cochera.js';
+import { validarFaltantes } from '../utils/validaciones.js';
 
 export default class CocheraManager {
     async crear(cochera) {
         const { numero, tipo, propietario } = cochera;
 
-        if (!numero || !tipo || !propietario) {
-            throw new Error('Faltan datos');
-        }
+        validarFaltantes('Faltan datos para crear la cochera.', {
+            numero,
+            tipo,
+            propietario,
+        });
 
         const creado = await Cochera.create(cochera);
         return creado;

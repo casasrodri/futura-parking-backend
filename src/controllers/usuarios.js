@@ -1,12 +1,16 @@
 import Usuario from '../models/usuario.js';
+import { validarFaltantes } from '../utils/validaciones.js';
 
 export default class UsuarioManager {
     async crear(usuario) {
         const { nombre, apellido, email, password } = usuario;
 
-        if (!nombre || !apellido || !email || !password) {
-            throw new Error('Faltan datos');
-        }
+        validarFaltantes('Faltan datos para crear al usuario.', {
+            nombre,
+            apellido,
+            email,
+            password,
+        });
 
         const creado = await Usuario.create(usuario);
         return creado;

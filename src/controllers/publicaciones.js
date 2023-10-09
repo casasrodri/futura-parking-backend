@@ -1,4 +1,5 @@
 import Publicacion from '../models/publicacion.js';
+import { validarFaltantes } from '../utils/validaciones.js';
 
 const determinarSimilitud = (base, comparada) => {
     const iniCompartido = base.ini < comparada.ini ? comparada.ini : base.ini;
@@ -18,23 +19,21 @@ const determinarSimilitud = (base, comparada) => {
 
 export default class PublicacionManager {
     async crear(publicacion) {
-        const { tipo, creador, ini, fin, cochera, precio, vehiculo } =
-            publicacion;
+        const { tipo, creador, ini, fin, cochera, vehiculo } = publicacion;
 
-        if (!tipo || !creador || !ini || !fin) {
-            throw new Error('Faltan datos');
-        }
+        validarFaltantes('Faltan datos para crear la publicación.', {
+            tipo,
+            creador,
+            ini,
+            fin,
+        });
 
         if (tipo === 'demanda') {
-            if (!vehiculo) {
-                throw new Error('Faltan datos de la demanda.');
-            }
+            validarFaltantes('Faltan datos de la demanda.', { vehiculo });
         }
 
         if (tipo === 'oferta') {
-            if (!cochera) {
-                throw new Error('Faltan datos de la oferta.');
-            }
+            validarFaltantes('Faltan datos de la oferta.', { cochera });
         }
 
         const creado = await Publicacion.create(publicacion);
