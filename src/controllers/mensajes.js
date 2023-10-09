@@ -22,7 +22,7 @@ export default class MensajeManager {
         }
 
         const yaLeido = mensaje.lecturas.filter((l) => l.usuario === usuario);
-        if (yaLeido) {
+        if (yaLeido.length > 0) {
             return mensaje;
         }
 

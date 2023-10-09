@@ -29,10 +29,15 @@ router.get('/porPublicacion/:id', async (req, res) => {
 
 router.get('/:cid/mensajesNoLeidos/usuario/:uid', async (req, res) => {
     const { cid, uid } = req.params;
+    console.log(cid, uid);
+
     const mensajesConversacion = await mm.obtenerTodosPorConversacion(cid);
+    console.log(mensajesConversacion);
 
     const mensajesNoLeidos = mensajesConversacion.filter((m) => {
-        const leido = m.lecturas.find((l) => l.usuario == uid);
+        const leido = m.lecturas.find(
+            (l) => l.usuario.toString() == uid.toString()
+        );
         return !leido;
     });
 
