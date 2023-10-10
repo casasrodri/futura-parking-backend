@@ -31,11 +31,16 @@ router.post('/login', async (req, res) => {
         usuario = {
             id: usuarioExiste._id,
             nombre: usuarioExiste.nombre,
+            apellido: usuarioExiste.apellido,
         };
     }
 
     // Creación del token
     usuario.token = `Bearer ${generarToken(usuario.id)}`;
+
+    // Expiración del token
+    const expira = parseJwt(usuario.token).exp;
+    usuario.expira = expira * 1000;
 
     res.json(usuario);
 });
@@ -48,3 +53,7 @@ router.get('/protected', jwtAuth, (req, res) => {
 });
 
 export default router;
+
+function parseJwt(token) {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
