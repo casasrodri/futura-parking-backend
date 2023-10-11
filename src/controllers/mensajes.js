@@ -21,7 +21,9 @@ export default class MensajeManager {
             throw new Error('No se encontró el mensaje');
         }
 
-        const yaLeido = mensaje.lecturas.filter((l) => l.usuario === usuario);
+        const yaLeido = mensaje.lecturas.filter(
+            (l) => l.usuario.toString() === usuario
+        );
         if (yaLeido.length > 0) {
             return mensaje;
         }
