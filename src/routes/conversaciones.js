@@ -44,11 +44,20 @@ router.get('/:cid/mensajesNoLeidos/usuario/:uid', async (req, res) => {
 
 router.get('/delUsuario/:id', async (req, res) => {
     const id = req.params.id;
-    const conversaciones = await Conversacion.find({
-        $or: [{ oferente: id }, { demandante: id }],
-    }).populate('publicacion oferente demandante');
-    // TODO filtrar las conversaciones cuyas publicaciones estén finalizadas
-    res.json(conversaciones);
+    if (!id) return res.status(400).json({ mensaje: 'Falta el id.' });
+
+    try {
+        const conversaciones = await Conversacion.find({
+            $or: [{ oferente: id }, { demandante: id }],
+        }).populate('publicacion oferente demandante');
+        // TODO filtrar las conversaciones cuyas publicaciones estén finalizadas
+        res.json(conversaciones);
+    } catch (error) {
+        // FIXME no estoy viendo de donde viene el error
+        console.error('Acá falló!');
+        console.log(error);
+        console.log(id);
+    }
 });
 
 export default router;

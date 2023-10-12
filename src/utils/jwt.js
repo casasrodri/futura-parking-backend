@@ -7,3 +7,5 @@ export const generarToken = (usuario) => {
     const token = jwt.sign({ usuario }, PRIVATE_KEY, { expiresIn: '2h' }); //2h
     return token;
 };
+
+export const verificarToken = (token, cb) => jwt.verify(token, PRIVATE_KEY, cb);
