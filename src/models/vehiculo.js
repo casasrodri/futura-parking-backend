@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import PublicacionModel from './publicacion.js';
 // import mongoosePaginate from 'mongoose-paginate-v2';
 
 const schema = new mongoose.Schema(
@@ -17,6 +18,11 @@ const schema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+// schema.post('remove', async function (res, next) {
+//     await PublicacionModel.deleteMany({ vehiculo: { _id: this._id } });
+//     next();
+// });
 
 // schema.plugin(mongoosePaginate);
 
